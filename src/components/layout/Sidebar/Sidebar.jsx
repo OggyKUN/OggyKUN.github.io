@@ -29,7 +29,7 @@ const IconWrapper = ({ src, alt }) => (
     src={src}
     alt={alt}
     className="sidebar__icon-img"
-    style={{ width: "20px", height: "20px" }}
+    style={{ width: "16px", height: "16px" }}
   />
 );
 

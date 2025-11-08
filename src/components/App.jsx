@@ -10,6 +10,7 @@ function App() {
   const [modalMode, setModalMode] = useState("add");
   const [selectedDate, setSelectedDate] = useState("");
   const [editingEvent, setEditingEvent] = useState(null);
+  const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
 
   const [events, setEvents] = useState([]);
 
@@ -22,9 +23,11 @@ function App() {
   );
 
   const handleDateClick = (arg) => {
+    const { pageX, pageY } = arg.jsEvent || {};
     setSelectedDate(arg.dateStr);
     setModalMode("add");
     setEditingEvent(null);
+    setModalPosition({ x: pageX || 0, y: pageY || 0 });
     setIsModalOpen(true);
   };
 
@@ -65,9 +68,26 @@ function App() {
   const handleEventClick = (clickInfo) => {
     const evt = events.find((e) => e.id === clickInfo.id);
     if (!evt) return;
+
+    let position = { x: 0, y: 0 };
+
+    if (clickInfo.jsEvent) {
+      position = {
+        x: clickInfo.jsEvent.pageX || 0,
+        y: clickInfo.jsEvent.pageY || 0,
+      };
+    } else if (clickInfo.el) {
+      const rect = clickInfo.el.getBoundingClientRect();
+      position = {
+        x: rect.left + window.scrollX,
+        y: rect.top + window.scrollY,
+      };
+    }
+
     setEditingEvent(evt);
     setModalMode("edit");
     setSelectedDate(evt.date.slice(0, 10));
+    setModalPosition(position);
     setIsModalOpen(true);
   };
 
@@ -108,6 +128,7 @@ function App() {
             ? () => handleDeleteEvent(editingEvent.id)
             : undefined
         }
+        position={modalPosition}
         initialEvent={
           modalMode === "edit" && editingEvent
             ? {

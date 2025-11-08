@@ -1,9 +1,9 @@
+import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-import React from "react";
 
 export default function Calendar({
   events,
@@ -11,14 +11,26 @@ export default function Calendar({
   onEventClick,
   onEventDrop,
 }) {
+  const handleDateClick = (arg) => {
+    if (onDateClick) {
+      onDateClick(arg);
+    }
+  };
+
   return (
     <FullCalendar
       plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
       initialView="dayGridMonth"
+      expandRows={true}
+      slotDuration="02:00:00"
+      slotLabelInterval="02:00"
+      slotMinTime="00:00:00"
+      slotMaxTime="24:00:00"
+      allDaySlot={false}
       headerToolbar={{
-        left: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
-        center: "",
-        right: "today,prev,next title",
+        start: "today,prev,next",
+        center: "title",
+        end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
       }}
       buttonText={{
         today: "Today",
@@ -38,9 +50,17 @@ export default function Calendar({
       }))}
       editable={true}
       selectable={true}
-      dateClick={(arg) => onDateClick({ dateStr: arg.dateStr })}
-      eventClick={(info) => onEventClick({ id: info.event.id })}
+      dateClick={handleDateClick}
+      eventClick={(info) =>
+        onEventClick &&
+        onEventClick({
+          id: info.event.id,
+          jsEvent: info.jsEvent,
+          el: info.el,
+        })
+      }
       eventDrop={(info) =>
+        onEventDrop &&
         onEventDrop({ id: info.event.id, dateStr: info.event.startStr })
       }
     />

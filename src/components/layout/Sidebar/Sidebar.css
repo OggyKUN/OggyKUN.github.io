@@ -43,8 +43,8 @@
 .sidebar__link {
   display: flex;
   align-items: center;
-  gap: 40px;
-  padding: 1rem 1.5rem;
+  gap: 12px;
+  padding: 20px 25px;
   color: var(--color-white);
   text-decoration: none;
   transition: background-color 0.2s, color 0.2s;
