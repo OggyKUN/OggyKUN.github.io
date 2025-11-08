@@ -87,6 +87,16 @@
 
   .fc-view-harness {
     grid-area: calendar;
+    overflow: hidden;
+  }
+
+  .fc-view-harness-active {
+    overflow: visible;
+  }
+
+  .fc-scroller {
+    overflow-x: auto;
+    overflow-y: auto;
   }
   .fc-button {
     background-color: var(--color-white);
@@ -160,6 +170,7 @@
 
   .fc-daygrid-day {
     border-color: var(--color-border);
+    min-height: 135px;
 
     &.fc-day-today {
       background-color: rgba(59, 134, 255, 0.05);
@@ -170,6 +181,10 @@
       }
     }
 
+    &.fc-day-drag-over {
+      min-height: 120px;
+    }
+
     .fc-daygrid-day-number {
       font-size: 15px;
       font-weight: 400;
@@ -178,26 +193,50 @@
     }
   }
 
+  .fc-daygrid-day-frame {
+    min-height: 120px;
+  }
+
+  .fc-daygrid-day-top {
+    min-height: auto;
+  }
+
   .fc-event {
-    background-color: var(--color-primary);
     border: none;
-    color: var(--color-white);
     border-radius: 6px;
     font-size: 13px;
     font-weight: 400;
     padding: 4px 8px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
     word-break: break-word;
     line-height: 1.2;
     transition: transform 0.1s ease, opacity 0.2s ease;
+    cursor: move;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .fc-event:hover {
     opacity: 0.9;
-    transform: scale(1.02);
+    transform: scale(1.01);
+  }
+
+  .fc-event-dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+  }
+
+  .fc-event-resizing {
+    opacity: 0.7;
+  }
+
+  .fc-daygrid-day.fc-day-drag-over,
+  .fc-daygrid-day.fc-day-drag-over .fc-daygrid-day-frame {
+    min-height: 120px;
   }
 
   .fc-daygrid-day-events {
@@ -217,5 +256,50 @@
     display: grid;
     grid-template-rows: repeat(12, 1fr);
     flex: 1;
+  }
+
+  .fc-timegrid-col {
+    overflow: hidden;
+  }
+
+  .fc-timegrid-col-frame {
+    overflow: hidden;
+  }
+
+  .fc-timegrid-event {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .fc-timegrid-event-harness {
+    overflow: hidden;
+  }
+
+  .fc-timegrid-event-frame {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .fc-list-event {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .fc-list-event-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fc-timegrid-event-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fc-listWeek-button {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed !important;
   }
 }

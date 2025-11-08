@@ -1,9 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./App.css";
 import Calendar from "./calendar/Calendar/Calendar";
 import EventModal from "./calendar/EventModal/EventModal";
 import Sidebar from "./layout/Sidebar/Sidebar";
 import TopHeader from "./layout/TopHeader/TopHeader";
+
+const STORAGE_KEY = "calendar-events";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,7 +14,23 @@ function App() {
   const [editingEvent, setEditingEvent] = useState(null);
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
 
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error("Failed to load events from localStorage:", error);
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+    } catch (error) {
+      console.error("Failed to save events to localStorage:", error);
+    }
+  }, [events]);
 
   const sortedEvents = useMemo(
     () =>
@@ -93,9 +111,50 @@ function App() {
 
   const handleEventDrop = (dropInfo) => {
     setEvents((prev) =>
-      prev.map((e) =>
-        e.id === dropInfo.id ? { ...e, date: dropInfo.dateStr } : e
-      )
+      prev.map((e) => {
+        if (e.id !== dropInfo.id) return e;
+
+        let newDate;
+
+        if (dropInfo.start) {
+          const year = dropInfo.start.getFullYear();
+          const month = String(dropInfo.start.getMonth() + 1).padStart(2, "0");
+          const day = String(dropInfo.start.getDate()).padStart(2, "0");
+          const hours = String(dropInfo.start.getHours()).padStart(2, "0");
+          const minutes = String(dropInfo.start.getMinutes()).padStart(2, "0");
+          newDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+        } else if (dropInfo.dateStr) {
+          if (dropInfo.dateStr.includes("T")) {
+            newDate = dropInfo.dateStr.slice(0, 16);
+          } else {
+            const existingTime = e.date.includes("T")
+              ? e.date.split("T")[1].slice(0, 5)
+              : "00:00";
+            newDate = `${dropInfo.dateStr}T${existingTime}`;
+          }
+        } else {
+          return e;
+        }
+
+        return { ...e, date: newDate };
+      })
+    );
+  };
+
+  const handleEventResize = (resizeInfo) => {
+    setEvents((prev) =>
+      prev.map((e) => {
+        if (e.id !== resizeInfo.id) return e;
+
+        const startDate = resizeInfo.start;
+        const year = startDate.getFullYear();
+        const month = String(startDate.getMonth() + 1).padStart(2, "0");
+        const day = String(startDate.getDate()).padStart(2, "0");
+        const hours = String(startDate.getHours()).padStart(2, "0");
+        const minutes = String(startDate.getMinutes()).padStart(2, "0");
+
+        return { ...e, date: `${year}-${month}-${day}T${hours}:${minutes}` };
+      })
     );
   };
 
@@ -113,6 +172,7 @@ function App() {
               onDateClick={handleDateClick}
               onEventClick={handleEventClick}
               onEventDrop={handleEventDrop}
+              onEventResize={handleEventResize}
             />
           </div>
         </main>

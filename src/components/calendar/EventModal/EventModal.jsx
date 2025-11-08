@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import "./EventModal.css";
 
 export default function EventModal({
@@ -60,6 +61,11 @@ export default function EventModal({
             position: "absolute",
           }}
         >
+          <VisuallyHidden.Root>
+            <Dialog.Title>
+              {mode === "edit" ? "Edit Event" : "Add Event"}
+            </Dialog.Title>
+          </VisuallyHidden.Root>
           <button
             className="event-modal__close"
             onClick={() => onOpenChange(false)}
