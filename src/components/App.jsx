@@ -72,7 +72,6 @@ function App() {
   };
 
   const handleEventDrop = (dropInfo) => {
-    // dateStr includes full ISO datetime
     setEvents((prev) =>
       prev.map((e) =>
         e.id === dropInfo.id ? { ...e, date: dropInfo.dateStr } : e
@@ -86,11 +85,9 @@ function App() {
       <div className="app-layout">
         <Sidebar />
         <main className="app-main">
-          <header className="app-header">
-            <h1 className="app-header__title">Calendar</h1>
-            <p className="app-header__subtitle">Calendar View</p>
-          </header>
+          <header className="app-header">Calendar</header>
           <div className="calendar-container">
+            <p className="app-header__subtitle">Calendar View</p>
             <Calendar
               events={sortedEvents}
               onDateClick={handleDateClick}

@@ -1,31 +1,45 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light;
-  color: #333;
-  background-color: #f5f6fa;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --color-primary: #007bff;
-  --color-background: #f5f6fa;
+  --color-primary: #3b86ff;
+  --color-background: #f0f0f7;
   --color-white: #ffffff;
-  --color-red: #dc3545;
-  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-red: #ff5f5f;
+  --color-shadow: rgba(0, 0, 0, 0.16);
+  --color-text-primary: #43425d;
+  --color-text-secondary: #4d4f5c;
+  --color-text-muted: #43425d80;
+  --color-text-light: #6a6996;
+  --color-border: #d6d6d6;
+  --color-secondary: #a5a4bf;
+  --color-label: #a3a6b4;
+  --color-sidebar-bg: #43425d;
+  --color-sidebar-overlay: rgba(0, 0, 0, 0.1);
+
+  --sidebar-width: 260px;
+  --header-height: 64px;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-weight: 400;
+  color: var(--color-primary);
   text-decoration: inherit;
+  font-size: 13px;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-primary);
+  opacity: 0.8;
 }
 
 html,
@@ -42,4 +56,3 @@ body {
   width: 100%;
   height: 100%;
 }
-

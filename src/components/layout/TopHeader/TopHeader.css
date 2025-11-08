@@ -7,11 +7,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  padding-left: calc(250px + 2rem); /* Account for sidebar */
+  padding-left: calc(var(--sidebar-width) + 2rem);
   background-color: var(--color-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid #e5e7eb;
-  height: 64px;
+  box-shadow: 0 2px 4px var(--color-shadow);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
   z-index: 99;
 }
 
@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background-color: #f5f6fa;
+  background-color: var(--color-background);
   border-radius: 8px;
   padding: 0.625rem 1rem;
   flex: 1;
@@ -27,7 +27,7 @@
 }
 
 .top-header__search-icon {
-  color: #6b7280;
+  color: var(--color-text-light);
   flex-shrink: 0;
 }
 
@@ -35,13 +35,15 @@
   border: none;
   background: transparent;
   outline: none;
-  font-size: 0.875rem;
-  color: #333;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
   width: 100%;
 }
 
 .top-header__search-input::placeholder {
-  color: #9ca3af;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
 }
 
 .top-header__user {
@@ -53,7 +55,7 @@
 .top-header__icon-btn {
   background: none;
   border: none;
-  color: #6b7280;
+  color: var(--color-text-light);
   cursor: pointer;
   padding: 0.5rem;
   display: flex;
@@ -64,8 +66,8 @@
 }
 
 .top-header__icon-btn:hover {
-  background-color: #f5f6fa;
-  color: #333;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
 }
 
 .top-header__profile {
@@ -79,17 +81,17 @@
 }
 
 .top-header__profile:hover {
-  background-color: #f5f6fa;
+  background-color: var(--color-background);
 }
 
 .top-header__name {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #333;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text-primary);
 }
 
 .top-header__arrow {
-  color: #6b7280;
+  color: var(--color-text-light);
 }
 
 .top-header__avatar {
@@ -98,12 +100,12 @@
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--color-border);
   transition: border-color 0.2s;
 }
 
 .top-header__avatar:hover {
-  border-color: #007bff;
+  border-color: var(--color-primary);
 }
 
 .top-header__avatar-img {

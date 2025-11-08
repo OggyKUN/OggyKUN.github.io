@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import "./EventModal.css";
 
-// Date formatting utilities
 const formatDateForDisplay = (dateStr) => {
   if (!dateStr) return "";
   const date = new Date(dateStr + "T00:00:00");
