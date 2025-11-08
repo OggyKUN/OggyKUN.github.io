@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import "./EventModal.css";
 
 // Date formatting utilities
-const formatDateForDisplay = (dateStr: string): string => {
+const formatDateForDisplay = (dateStr) => {
   if (!dateStr) return "";
   const date = new Date(dateStr + "T00:00:00");
   const day = String(date.getDate()).padStart(2, "0");
@@ -12,7 +12,7 @@ const formatDateForDisplay = (dateStr: string): string => {
   return `${day}.${month}.${year}`;
 };
 
-const parseDateFromDisplay = (displayDate: string): string => {
+const parseDateFromDisplay = (displayDate) => {
   if (!displayDate) return "";
   const parts = displayDate.split(".");
   if (parts.length !== 3) return "";
@@ -27,18 +27,6 @@ export default function EventModal({
   onSave,
   onDelete,
   initialEvent,
-}: {
-  open: boolean;
-  mode?: "add" | "edit";
-  onOpenChange: (open: boolean) => void;
-  onSave: (event: {
-    title: string;
-    date: string;
-    time: string;
-    color: string;
-  }) => void;
-  onDelete?: () => void;
-  initialEvent?: { title: string; date: string; time: string; color: string };
 }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -71,7 +59,7 @@ export default function EventModal({
     }
   }, [initialEvent, open, mode]);
 
-  const validateTitle = (): boolean => {
+  const validateTitle = () => {
     if (!title.trim()) {
       setErrors((prev) => ({ ...prev, title: "Title is required" }));
       return false;
@@ -87,7 +75,7 @@ export default function EventModal({
     return true;
   };
 
-  const validateDate = (): boolean => {
+  const validateDate = () => {
     if (!date) {
       setErrors((prev) => ({ ...prev, date: "Date is required" }));
       return false;
@@ -106,7 +94,7 @@ export default function EventModal({
     return true;
   };
 
-  const validateTime = (): boolean => {
+  const validateTime = () => {
     if (!time) {
       setErrors((prev) => ({ ...prev, time: "Time is required" }));
       return false;
@@ -115,21 +103,21 @@ export default function EventModal({
     return true;
   };
 
-  const validateAll = (): boolean => {
+  const validateAll = () => {
     const titleValid = validateTitle();
     const dateValid = validateDate();
     const timeValid = validateTime();
     return titleValid && dateValid && timeValid;
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e) => {
     setTitle(e.target.value);
     if (errors.title) {
       setErrors((prev) => ({ ...prev, title: "" }));
     }
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateChange = (e) => {
     const newDate = e.target.value;
     setDate(newDate);
     setDateDisplay(formatDateForDisplay(newDate));
@@ -138,7 +126,7 @@ export default function EventModal({
     }
   };
 
-  const handleDateDisplayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateDisplayChange = (e) => {
     const displayValue = e.target.value;
     setDateDisplay(displayValue);
     const parsed = parseDateFromDisplay(displayValue);
@@ -150,7 +138,7 @@ export default function EventModal({
     }
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTimeChange = (e) => {
     setTime(e.target.value);
     if (errors.time) {
       setErrors((prev) => ({ ...prev, time: "" }));
@@ -171,7 +159,7 @@ export default function EventModal({
     onOpenChange(false);
   };
 
-  const getMinDate = (): string => {
+  const getMinDate = () => {
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0");
@@ -257,7 +245,7 @@ export default function EventModal({
                   onClick={() => {
                     const dateInput = document.querySelector(
                       ".event-modal__date-picker"
-                    ) as HTMLInputElement;
+                    );
                     if (dateInput) {
                       if (typeof dateInput.showPicker === "function") {
                         dateInput.showPicker();
@@ -342,3 +330,4 @@ export default function EventModal({
     </Dialog.Root>
   );
 }
+

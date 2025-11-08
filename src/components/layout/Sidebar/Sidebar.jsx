@@ -14,7 +14,7 @@ const menuItems = [
   "Settings",
 ];
 
-const getIcon = (item: string) => {
+const getIcon = (item) => {
   const iconStyle = { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none" };
   switch (item) {
     case "Home":

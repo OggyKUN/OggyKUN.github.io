@@ -1,19 +1,17 @@
 import React, { useMemo, useState } from "react";
 import "./App.css";
-import Calendar from "./Calendar";
-import EventModal from "./EventModal";
-import Sidebar from "./Sidebar";
-import TopHeader from "./TopHeader";
-
-type AppEvent = { id: string; title: string; date: string; color: string };
+import Calendar from "./calendar/Calendar/Calendar";
+import EventModal from "./calendar/EventModal/EventModal";
+import Sidebar from "./layout/Sidebar/Sidebar";
+import TopHeader from "./layout/TopHeader/TopHeader";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [editingEvent, setEditingEvent] = useState<AppEvent | null>(null);
+  const [modalMode, setModalMode] = useState("add");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [editingEvent, setEditingEvent] = useState(null);
 
-  const [events, setEvents] = useState<AppEvent[]>([]);
+  const [events, setEvents] = useState([]);
 
   const sortedEvents = useMemo(
     () =>
@@ -23,20 +21,14 @@ function App() {
     [events]
   );
 
-  const handleDateClick = (arg: { dateStr: string }) => {
+  const handleDateClick = (arg) => {
     setSelectedDate(arg.dateStr);
     setModalMode("add");
     setEditingEvent(null);
     setIsModalOpen(true);
   };
 
-  const handleAddOrEditEvent = (event: {
-    id?: string;
-    title: string;
-    date: string; // full ISO date (YYYY-MM-DD) and time combined later if needed
-    time: string; // HH:mm
-    color: string;
-  }) => {
+  const handleAddOrEditEvent = (event) => {
     const isoDateTime = `${event.date}T${event.time}`;
     if (modalMode === "edit" && editingEvent) {
       setEvents((prev) =>
@@ -56,7 +48,7 @@ function App() {
         typeof crypto !== "undefined" && "randomUUID" in crypto
           ? crypto.randomUUID()
           : `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-      const newEvent: AppEvent = {
+      const newEvent = {
         id,
         title: event.title,
         date: isoDateTime,
@@ -66,11 +58,11 @@ function App() {
     }
   };
 
-  const handleDeleteEvent = (id: string) => {
+  const handleDeleteEvent = (id) => {
     setEvents((prev) => prev.filter((e) => e.id !== id));
   };
 
-  const handleEventClick = (clickInfo: { id: string }) => {
+  const handleEventClick = (clickInfo) => {
     const evt = events.find((e) => e.id === clickInfo.id);
     if (!evt) return;
     setEditingEvent(evt);
@@ -79,7 +71,7 @@ function App() {
     setIsModalOpen(true);
   };
 
-  const handleEventDrop = (dropInfo: { id: string; dateStr: string }) => {
+  const handleEventDrop = (dropInfo) => {
     // dateStr includes full ISO datetime
     setEvents((prev) =>
       prev.map((e) =>

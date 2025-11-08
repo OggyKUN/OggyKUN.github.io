@@ -6,18 +6,11 @@ import listPlugin from "@fullcalendar/list";
 
 import React from "react";
 
-type AppEvent = { id: string; title: string; date: string; color: string };
-
 export default function Calendar({
   events,
   onDateClick,
   onEventClick,
   onEventDrop,
-}: {
-  events: AppEvent[];
-  onDateClick: (arg: { dateStr: string }) => void;
-  onEventClick: (arg: { id: string }) => void;
-  onEventDrop: (arg: { id: string; dateStr: string }) => void;
 }) {
   return (
     <FullCalendar
@@ -45,3 +38,4 @@ export default function Calendar({
     />
   );
 }
+
