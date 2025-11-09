@@ -3,14 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://oggykun.github.io/",
+  "homepage": "https://OggyKUN.github.io/corsel-test/",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --config vite.config.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "pnpm run build",
-    "deploy": "git config --global commit.gpgsign false && gh-pages -d dist && git config --global commit.gpgsign true"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.19",
