@@ -9,8 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "pnpm run build",
+    "deploy": "git config --global commit.gpgsign false && gh-pages -d dist && git config --global commit.gpgsign true"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.19",
